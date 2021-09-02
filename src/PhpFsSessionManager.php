@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SessionManager;
+namespace Indibit\SessionManager;
 
 /**
  * Verwaltung von nativen PHP-Sitzungen mit session.save_handler=files

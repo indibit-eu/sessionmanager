@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SessionManager;
+namespace Indibit\SessionManager;
 
 interface SessionManagerInterface
 {
