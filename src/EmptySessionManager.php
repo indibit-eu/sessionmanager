@@ -6,34 +6,18 @@ namespace Indibit\SessionManager;
 
 class EmptySessionManager implements SessionManagerInterface
 {
-    private bool $started = false;
 
     // Create a new empty session manager
-    public function __construct()
-    {
-    }
+    public function __construct() { }
 
-    public function getData(): array
-    {
-        return [];
-    }
-
-    public function createOrResume(bool $immediateUnlock = false): void
-    {
-        if ($this->isPresent()) {
-            throw new SessionException('Sitzung wurde bereits erzeugt');
-        }
-        $this->started = true;
-    }
+    public function createOrResume(bool $immediateUnlock = false): void { }
 
     /**
      * @throws SessionException
      */
     private function assertPresent(): void
     {
-        if (!$this->isPresent()) {
-            throw new SessionException('Keine Sitzung');
-        }
+        throw new SessionException('Die öffentliche Sitzung existiert nicht');
     }
 
     /**
@@ -51,7 +35,7 @@ class EmptySessionManager implements SessionManagerInterface
 
     public function isPresent(): bool
     {
-        return $this->started;
+        return false;
     }
 
     /**
@@ -68,7 +52,6 @@ class EmptySessionManager implements SessionManagerInterface
     public function get(string $key): mixed
     {
         $this->assertPresent();
-        return null;
     }
 
     /**
@@ -85,7 +68,6 @@ class EmptySessionManager implements SessionManagerInterface
     public function containsKey(string $key): bool
     {
         $this->assertPresent();
-        return false;
     }
 
     /**
@@ -117,9 +99,7 @@ class EmptySessionManager implements SessionManagerInterface
         $this->assertWriteable();
     }
 
-    public function destroy(string $id): void
-    {
-    }
+    public function destroy(string $id): void { }
 
     public function __toString()
     {
