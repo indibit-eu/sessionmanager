@@ -123,6 +123,6 @@ class EmptySessionManager implements SessionManagerInterface
 
     public function __toString()
     {
-        return self::class.'[]';
+        return self::class . '[]';
     }
 }
