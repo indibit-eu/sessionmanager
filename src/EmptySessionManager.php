@@ -7,7 +7,6 @@ namespace Indibit\SessionManager;
 class EmptySessionManager implements SessionManagerInterface
 {
     private bool $started = false;
-    private bool $locked = true;
 
     // Create a new empty session manager
     public function __construct()
@@ -22,10 +21,9 @@ class EmptySessionManager implements SessionManagerInterface
     public function createOrResume(bool $immediateUnlock = false): void
     {
         if ($this->isPresent()) {
-            throw new SessionException('Session wurde bereits erzeugt');
+            throw new SessionException('Sitzung wurde bereits erzeugt');
         }
         $this->started = true;
-        $this->locked = !$immediateUnlock;
     }
 
     /**
@@ -43,14 +41,12 @@ class EmptySessionManager implements SessionManagerInterface
      */
     private function assertWriteable(): void
     {
-        if (!$this->isWriteable()) {
-            throw new SessionException('Die Sitzung ist nicht mehr schreibbar');
-        }
+        throw new SessionException('Die öffentliche Sitzung ist nicht schreibbar');
     }
 
     public function isWriteable(): bool
     {
-        return $this->isPresent() && $this->locked === true;
+        return false;
     }
 
     public function isPresent(): bool
@@ -64,7 +60,6 @@ class EmptySessionManager implements SessionManagerInterface
     public function unlock(): void
     {
         $this->assertPresent();
-        $this->locked = false;
     }
 
     /**
